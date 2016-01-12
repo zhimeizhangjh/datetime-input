@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        body{
+            font-family: 'Myriad Set Pro', 'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;
+        }
+        .datetime-input-outer{
+            position: relative;
+            display: inline-block;
+            height: 34px;
+            line-height: 34px;
+        }
+        .datetime-input-outer .datetime-input-bg{
+            position: absolute;
+            z-index: -1;
+            top: 2px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .datetime-input-outer input{
+            background: transparent;
+            width: 200px;
+            height: 100%;
+            border: 1px solid black;
+            font-size: inherit;
+        }
+        .datetime-input-outer .datetime-input-bg span{
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<div class="datetime-input-outer">
+    <input type="text" id="myInput"/>
+    <div id="inputBg" class="datetime-input-bg" style="word-spacing: 0;">
+        yyyy/mm/dd hh:mm:ss
+    </div>
+</div>
+<script src="../bower_components/underscore/underscore-min.js"></script>
+<script src="../src/datetime-input.js"></script>
+<script>
+    var input = document.getElementById('myInput');
+    var dateTimeInput = new DateTimeInput();
+    var inputBg = document.getElementById('inputBg');
+
+    input.onkeyup = function(){
+        var val = input.value;
+        var length = val.length;
+        var initStr = 'yyyy/mm/dd hh:mm:ss';
+        var newStr = initStr.substr(length);
+        inputBg.innerHTML = '<span style="visibility: hidden;">' + val + '</span>' + newStr;
+    }
+
+//    dateTimeInput.initializeInput(input);
+</script>
+</body>
+</html>

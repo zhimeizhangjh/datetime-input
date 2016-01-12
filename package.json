@@ -1,0 +1,29 @@
+{
+  "name": "datetime-input",
+  "version": "1.0.0",
+  "description": "an datetime input control",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhimeizhangjh/datetime-input.git"
+  },
+  "keywords": [
+    "datetime",
+    "input"
+  ],
+  "author": "zjh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zhimeizhangjh/datetime-input/issues"
+  },
+  "homepage": "https://github.com/zhimeizhangjh/datetime-input#readme",
+  "devDependencies": {
+    "bower": "^1.7.2"
+  }
+}
