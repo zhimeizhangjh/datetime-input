@@ -27,8 +27,8 @@
 <body>
 <div class="datetime-input-outer">
     <form action="">
-        <input type="text" id="myInput" value="" name="input0"/>
-        <input type="text" id="myInput1" value="" name="input1"/>
+        <input type="text" class="myInput" value="" name="input0"/>
+        <input type="text" class="myInput" value="" name="input1"/>
         <input type="submit" value="submit"/>
     </form>
 </div>
@@ -36,10 +36,7 @@
 <script>
     window.onload = function () {
         var dateTimeInput = new DateTimeInput();
-        dateTimeInput.set([
-            document.getElementById('myInput'),
-            document.getElementById('myInput1')
-        ]);
+        dateTimeInput.set(document.getElementsByClassName('myInput'));
     };
 
 

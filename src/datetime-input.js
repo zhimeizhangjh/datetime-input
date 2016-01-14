@@ -14,10 +14,22 @@ function DateTimeInput() {
     };
 
     this.set = function (ele) {
-        ele.forEach(function (item) {
-            var dateTimeInputSetter = new DateTimeInputSetter(item);
+        var type = toString.call(ele);
+
+        if(type == '[object Array]' || type == '[object HTMLCollection]'){
+            Array.prototype.forEach.call(ele, function(item){
+                var dateTimeInputSetter = new DateTimeInputSetter(item);
+                dateTimeInputSetter.init();
+            });
+        }
+        else if(type == '[object HTMLInputElement]'){
+            var dateTimeInputSetter = new DateTimeInputSetter(ele);
             dateTimeInputSetter.init();
-        });
+        }
+        else{
+            throw new Error('Parameter "ele" must be HTMLInputElement or HTMLCollection!');
+        }
+
     };
 
     function DateTimeInputSetter(input) {
