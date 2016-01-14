@@ -25,179 +25,24 @@
     </style>
 </head>
 <body>
-<input type="text" style="margin: 30px 0;"/>
-
 <div class="datetime-input-outer">
-    <input type="text" id="myInput" value=""/>
-    <input type="text" id="myInput1" value=""/>
+    <form action="">
+        <input type="text" id="myInput" value="" name="input0"/>
+        <input type="text" id="myInput1" value="" name="input1"/>
+        <input type="submit" value="submit"/>
+    </form>
 </div>
-<!--<script src="../bower_components/underscore/underscore-min.js"></script>-->
-<!--<script src="../src/datetime-input.js"></script>-->
+<script src="../src/datetime-input.js"></script>
 <script>
-    var input = document.getElementById('myInput');
-    var input1 = document.getElementById('myInput1');
-
     window.onload = function () {
         var dateTimeInput = new DateTimeInput();
-        dateTimeInput.set([input, input1]);
+        dateTimeInput.set([
+            document.getElementById('myInput'),
+            document.getElementById('myInput1')
+        ]);
     };
 
-    function DateTimeInput() {
-        var formation = 'yyyy-mm-dd';
 
-        var keyCodes = {
-            left: 37,
-            right: 39,
-            delete: 8,
-            number: {
-                max: 57,
-                min: 48
-            }
-        };
-
-        this.set = function (ele) {
-            ele.forEach(function (item) {
-                init(item);
-            });
-        };
-
-        function init(input) {
-            input.value = formation;
-            bindEvents(input);
-        }
-
-        function bindEvents(input) {
-            input.onkeydown = function (e) {
-                var keyCode = e.keyCode;
-                if (isKeyAcceptable(input, keyCode)) {
-                    handleKeyCode(input, keyCode);
-                }
-                e.preventDefault();
-                e.returnValue = false;
-                return false;
-            };
-
-            input.onclick = function (e) {
-                var curPos = getCursortPosition(input);
-                var curIndex = getNextInsertIndex(input);
-                if (curPos > curIndex) {
-                    setCaretPosition(input, curIndex);
-                }
-            }
-        }
-
-        function handleKeyCode(input, keyCode) {
-            var curPos = getCursortPosition(input);
-            if (keyCode >= keyCodes.number.min && keyCode <= keyCodes.number.max) {
-                if (curIndex >= formation.length) {
-                    return;
-                }
-                insertLetter(input, keyCode);
-            }
-            else if (keyCode == keyCodes.delete) {
-                deleteLetter(input);
-            }
-            else if (keyCode == keyCodes.left) {
-                setCaretPosition(input, curPos - 1);
-            }
-            else if (keyCode == keyCodes.right) {
-                var curIndex = getNextInsertIndex(input);
-                if (curPos < curIndex) {
-                    setCaretPosition(input, curPos + 1);
-                }
-            }
-        }
-
-        function deleteLetter(input) {
-            var curIndex = minusNextInsertIndexByOne(input);
-            setCaretPosition(input, curIndex);
-        }
-
-        function getNextInsertIndex(input) {
-            return input.data ? (input.data.currentIndex || 0) : 0;
-        }
-
-        function setNextInsertIndex(input, index) {
-            if (!input.data) {
-                input.data = {
-                    currentIndex: 0
-                };
-            }
-            input.data.currentIndex = index;
-        }
-
-        function addNextInsertIndexByOne(input) {
-            var curIndex = getNextInsertIndex(input);
-            var newIndex = ++curIndex;
-            setNextInsertIndex(input, newIndex);
-            return newIndex;
-        }
-
-        function minusNextInsertIndexByOne(inupt) {
-            var curIndex = getNextInsertIndex(input);
-            var newIndex = --curIndex;
-            newIndex = newIndex >= 0 ? newIndex : 0;
-            setNextInsertIndex(input, newIndex);
-            return newIndex;
-        }
-
-        function isKeyAcceptable(input, keyCode) {
-            var isAcceptable = false;
-            if (keyCode == keyCodes.left
-                    || keyCode == keyCodes.right
-                    || keyCode == keyCodes.delete
-                    || (keyCode >= keyCodes.number.min && keyCode <= keyCodes.number.max)) {
-                isAcceptable = true;
-            }
-            return isAcceptable;
-        }
-
-        function insertLetter(input, keyCode) {
-            var prevVal = input.value;
-            var curIndex = addNextInsertIndexByOne(input);
-            var letterToInsert = keyCode - 48;
-            var newVal = (prevVal.substr(0, curIndex - 1)) + letterToInsert + prevVal.substr(curIndex);
-            input.value = newVal;
-
-            if (curIndex == 4 || curIndex == 7) {
-                curIndex = addNextInsertIndexByOne(input);
-            }
-
-            setCaretPosition(input, curIndex);
-        }
-
-        function getCursortPosition(ctrl) {
-            //获取光标位置函数
-            var CaretPos = 0;
-            // IE Support
-            if (document.selection) {
-                ctrl.focus();
-                var Sel = document.selection.createRange();
-                Sel.moveStart('character', -ctrl.value.length);
-                CaretPos = Sel.text.length;
-            }
-            // Firefox support
-            else if (ctrl.selectionStart || ctrl.selectionStart == '0') {
-                CaretPos = ctrl.selectionStart;
-            }
-            return (CaretPos);
-        }
-
-
-        function setCaretPosition(ctrl, pos) {
-            //设置光标位置函数
-            if (ctrl.setSelectionRange) {
-                ctrl.focus();
-                ctrl.setSelectionRange(pos, pos);
-            } else if (ctrl.createTextRange) {
-                var range = ctrl.createTextRange();
-                range.collapse(true);
-                range.moveEnd('character', pos);
-                range.moveStart('character', pos);
-                range.select();
-            }
-        }
-    }
 </script>
 </body>
 </html>
