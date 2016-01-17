@@ -123,6 +123,9 @@ function DateTimeInput() {
             var curIndex = getNextInsertIndex();
             var prevVal = input.value;
             var newVal;
+            if(curPos == 0){
+                return;
+            }
             if (curPos == curIndex) {
                 curIndex = minusNextInsertIndexByOne();
                 newVal = prevVal.substr(0, curIndex) + formation.substr(curIndex, 1) + prevVal.substr(curIndex + 1);
